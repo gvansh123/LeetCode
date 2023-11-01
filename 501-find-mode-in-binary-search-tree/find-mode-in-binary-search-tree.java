@@ -13,38 +13,65 @@
  *     }
  * }
  */
-public class Solution {
+class Solution {
+    
+    int max=0;
+    int count=0;
+    int temp=-1;
+
     public int[] findMode(TreeNode root) {
-        List<Integer> inorderr = new ArrayList<>();
-        inorder(root, inorderr);
+        
+        List<Integer> list=new ArrayList<>();
 
-        Map<Integer, Integer> freq = new HashMap<>();
-        int maxCount = 0;
+        sol(root,list);
 
-        for (int val : inorderr) {
-            freq.put(val, freq.getOrDefault(val, 0) + 1);
-            maxCount = Math.max(maxCount, freq.get(val));
+        int res[]=new int[list.size()];
+        int i=0;
+
+        for(Integer num : list)
+        {
+            res[i++]=num;
         }
 
-        List<Integer> result = new ArrayList<>();
-        for (Map.Entry<Integer, Integer> entry : freq.entrySet()) {
-            if (entry.getValue() == maxCount) {
-                result.add(entry.getKey());
+        return res;
+    }
+
+    public void sol(TreeNode root,List<Integer> list)
+    {
+        if(root==null)
+        {
+            return;
+        }
+
+        sol(root.left,list);
+
+        if(count==0 || root.val==temp)
+        {
+            temp=root.val;
+            count++;
+
+            if(count>max)
+            {
+                max=count;
+                list.clear();
+                list.add(root.val);
+            }
+            else if(count==max)
+            {
+                list.add(root.val);
+            }
+        }
+        else
+        {
+            count=1;
+            temp=root.val;
+
+            if(count==max)
+            {
+                list.add(root.val);
             }
         }
 
-        int[] resultArray = new int[result.size()];
-        for (int i = 0; i < result.size(); i++) {
-            resultArray[i] = result.get(i);
-        }
-
-        return resultArray;
-    }
-
-    private void inorder(TreeNode root, List<Integer> result) {
-        if (root == null) return;
-        result.add(root.val);
-        inorder(root.left, result);
-        inorder(root.right, result);
+        sol(root.right,list);
     }
 }
