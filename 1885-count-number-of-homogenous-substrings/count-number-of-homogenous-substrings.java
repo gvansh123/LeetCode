@@ -1,17 +1,25 @@
 class Solution {
     public int countHomogenous(String s) {
-        int left = 0;
         long res = 0;
-        
-        for (int right = 0; right < s.length(); right++) {
-            if (s.charAt(left) == s.charAt(right)) {
-                res += right - left + 1;
-            } else {
-                res += 1;
-                left = right;
+        char[] c = s.toCharArray();
+        int start = 0;
+        for(int i=0; i<c.length; i++){
+            if(c[i] != c[start]){
+                int appear = i-start;
+                while(appear>0){
+                    res+=appear;
+                    appear--;
+                }
+                start = i;
             }
         }
 
-        return (int) (res % (1000000007));       
+        int appear = c.length-start;
+        while(appear>0){
+            res+=appear;
+            appear--;
+        }
+
+        return (int)(res % (Math.pow(10, 9) + 7));
     }
 }
