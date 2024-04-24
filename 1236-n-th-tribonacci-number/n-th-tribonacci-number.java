@@ -1,18 +1,19 @@
 class Solution {
     public int tribonacci(int n) {
-        if(n<=2){
-            return (n==0)?0:1;
+        if(n<3)
+        {
+            return n==0?0:1;
         }
-        int p0=0;
-        int p1=1;
-        int p2=1;
-        int sum=0;
-        for(int i=3;i<=n;i++){
-            sum = p0+p1+p2;
-            p0 = p1;
-            p1 = p2;
-            p2 = sum;
+        int a=0;
+        int b=1;
+        int c=1;
+        for(int i=3;i<=n;i++)
+        {
+            int t=a+b+c;
+            a=b;
+            b=c;
+            c=t;
         }
-        return sum;
+     return c;
     }
 }
