@@ -17,8 +17,16 @@ class Solution {
     }
 public:
     int rearrangeSticks(int n, int k) {
-        vector<vector<int>> dp(n+1,vector<int>(k+1,-1));
-        long long ans=fun(n,k,dp);
-        return (int)ans;
+        vector<vector<long>> dp(n+1,vector<long>(k+1,0));
+
+        dp[0][0]=1;
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=min(i,k);j++)
+            {
+                dp[i][j]=((dp[i-1][j-1]%mod)+((((i-1)%mod)*dp[i-1][j]%mod)%mod))%mod;
+            }
+        }
+        return (int)dp[n][k];
     }
 };
