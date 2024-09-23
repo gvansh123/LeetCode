@@ -1,39 +1,28 @@
 class Solution {
-    bool solve(string &str)
+    bool open(char c)
     {
-        stack<char> s;
-        for(int i=0;i<str.length();i++)
-        {
-            char c=str[i];
-            if(c=='['||c=='{'||c=='(')
-            {
-                s.push(c);
-            }
-            else
-            {
-                if(!s.empty())
-                {
-                    char t=s.top();
-                    if((c=='}'&&t=='{')||(c==']'&&t=='[')||(c==')'&&t=='('))
-                    {
-                        s.pop();
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                return false;
-            }
-        }
-        if(s.empty())
-        return true;
-        else
-        return false;
+        return c=='('||c=='{'||c=='[';
     }
 public:
-    bool isValid(string s) {
-        return solve(s);
+    bool isValid(string str) {
+       stack<int> s;
+       for(auto i:str)
+       {
+        if(open(i))
+        {
+            s.push(i);
+        }
+        else
+        {
+            if(s.empty()==true)
+                return false;
+            if((i==')'&&s.top()=='(')||(i=='}'&&s.top()=='{')||(i==']'&&s.top()=='['))
+            s.pop();
+            else
+            return false;
+        }
+       }
+       return s.empty();
+
     }
 };
