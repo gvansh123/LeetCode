@@ -1,27 +1,29 @@
 class Solution {
 public:
-    void setZeroes(vector<vector<int>>& matrix) {
-        
-        vector<int> row(matrix.size(), 0);
-        vector<int> col(matrix[0].size(), 0);
-        for(int i=0;i<matrix.size();i++)
+    void setZeroes(vector<vector<int>>& mat) {
+        int m=mat.size();
+        int n=mat[0].size();
+        vector<int> r(m,0);
+        vector<int> c(n,0);
+
+        for(int i=0;i<m;i++)
         {
-            for(int j=0;j<matrix[i].size();j++)
+            for(int j=0;j<n;j++)
             {
-                if(matrix[i][j]==0)
+                if(mat[i][j]==0)
                 {
-                    row[i]=1;
-                    col[j]=1;
+                    r[i]=1;
+                    c[j]=1;
                 }
             }
         }
-        for(int i=0;i<matrix.size();i++)
+        for(int i=0;i<m;i++)
         {
-            for(int j=0;j<matrix[i].size();j++)
+            for(int j=0;j<n;j++)
             {
-                if(row[i]==1 || col[j]==1)
+                if(r[i]==1||c[j]==1)
                 {
-                    matrix[i][j]=0;
+                    mat[i][j]=0;
                 }
             }
         }
