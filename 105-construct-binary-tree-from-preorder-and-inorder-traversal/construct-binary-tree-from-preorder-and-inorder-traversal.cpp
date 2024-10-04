@@ -10,26 +10,23 @@
  * };
  */
 class Solution {
-public:
-    TreeNode* build(vector<int>& preorder, vector<int>& inorder,int &i,int left,int right)
-    {
-        if(left>right)
-        return nullptr;
-
-        int t=left;
-        while(inorder[t]!=preorder[i])
-        {
-        t++;
-        }
-        i++;
-        TreeNode*root=new TreeNode(inorder[t]);
-        root->left=build(preorder,inorder,i,left,t-1);
-        root->right=build(preorder,inorder,i,t+1,right);
+    TreeNode* build(vector<int>&preorder, int px, int py, vector<int> &inorder,int ix, int iy, map<int,int> &m){
+        if(px>py || ix>iy) return NULL;
+        TreeNode* root = new TreeNode(preorder[px]);
+        int inRoot = m[root->val];
+        int numsLeft = inRoot-ix;
+        
+        root->left = build(preorder,px+1,px+numsLeft,inorder,ix,inRoot-1,m);
+        root->right = build(preorder,px+numsLeft+1,py,inorder,inRoot+1,iy,m);
         return root;
     }
+public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        int n=inorder.size();
-        int i=0;
-        return build(preorder,inorder,i,0,n-1);
+        map<int,int> m;
+        for(int i=0;i<inorder.size();i++)
+        {
+            m[inorder[i]]=i;
+        }
+        return build(preorder,0,preorder.size()-1,inorder,0,inorder.size()-1,m);
     }
 };
