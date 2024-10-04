@@ -18,7 +18,9 @@ public:
 
         int t=left;
         while(inorder[t]!=preorder[i])
+        {
         t++;
+        }
         i++;
         TreeNode*root=new TreeNode(inorder[t]);
         root->left=build(preorder,inorder,i,left,t-1);
