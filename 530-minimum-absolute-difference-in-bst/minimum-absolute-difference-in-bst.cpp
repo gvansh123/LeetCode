@@ -6,24 +6,27 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : prev(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
-public:
-    int inorder(TreeNode* root, int& prev, int& ans) 
+    void inorder(TreeNode* root,int &ans,TreeNode* &prev)
     {
-        if (root->left != NULL)
-            inorder(root->left, prev, ans);
-        if (prev >= 0) 
-            ans = min(ans, root->val - prev);
-        prev = root->val;
-        if (root->right != NULL) 
-            inorder(root->right, prev, ans);
+        if(root==NULL)
+        return;
+        inorder(root->left,ans,prev);
+         if(prev!=NULL)
+         {
+         ans=min(ans,abs(root->val-prev->val));
+         }
+         prev=root;
+        inorder(root->right,ans,prev);
+    }
+public:
+    int getMinimumDifference(TreeNode* root) {
+        int ans=INT_MAX;
+        TreeNode* prev=NULL;
+        inorder(root,ans,prev);
         return ans;
     }
-int getMinimumDifference(TreeNode* root) {
-    auto ans = INT_MAX, prev = -1;
-    return inorder(root, prev, ans);
-}
 };
